@@ -59,6 +59,7 @@ struct csgesture_softc {
     int idForMouseDown;
     bool mousedown;
     int mousebutton;
+    bool liftfinger;
     
     int lastx[15];
     int lasty[15];

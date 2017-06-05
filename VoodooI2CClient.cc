@@ -9,6 +9,7 @@
 #include <csignal>
 #include <unistd.h>
 
+
 #include <thread>
 
 #include "updd.h"
@@ -30,36 +31,38 @@ int main(int argc, const char * argv[]) {
     int id = 0;
     int rc = 0;
     int terminate = 0;
+    
+
     struct sockaddr_ctl addr;
     ssize_t  recvSize = 0;
-    
     struct gesture_socket_cmd recv_cmd;
-    
     fd = socket(PF_SYSTEM, SOCK_DGRAM, SYSPROTO_CONTROL);
     if (fd == -1) {
         printf("[\033[0;31mx\033[0m] Fail to create socket\n");
         return -1;
     }
-    
     struct ctl_info ctlInfo;
     bzero(&ctlInfo, sizeof(struct ctl_info));
     strcpy(ctlInfo.ctl_name, GESTURE_CTL_NAME);
+    printf("test 1");
     
     for(;;) {
-        
-        if (ioctl(fd, CTLIOCGINFO, &ctlInfo) == -1) {
-            usleep(100);
-        } else break;
+    
+    if (ioctl(fd, CTLIOCGINFO, &ctlInfo) == -1) {
+        usleep(100);
+    } else break;
     }
     // Init
+
+    
     bzero(&addr, sizeof(addr));
     addr.sc_len     = sizeof(addr);
     addr.sc_family  = AF_SYSTEM;
     addr.ss_sysaddr = AF_SYS_CONTROL;
     addr.sc_id      = ctlInfo.ctl_id;
     addr.sc_unit    = 0;
-    
     updd_start();
+    
     printf("[\033[0;32mo\033[0m] Created UPDD connection...\n");
 
     printf("[\033[0;32mo\033[0m] Create socket... fd=%d\n",fd);
