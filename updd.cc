@@ -63,7 +63,7 @@ void inject_touch(struct csgesture_softc* sc) {
 
     if (sc->liftfinger) {
         for(int i = 0; i < MAX_FINGERS; i++) {
-            normalised_inject_touch(sc->x[i], sc->y[i], sc->resx, sc->resy, i, false);
+            normalised_inject_touch(sc_old.x[i], sc_old.y[i], sc->resx, sc->resy, i, false);
         }
         sc->liftfinger = false;
         delete sc;
